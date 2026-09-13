@@ -1,0 +1,6 @@
+{
+  "name": "Media Pembelajaran Algoritma Sorting",
+  "description": "Web pembelajaran interaktif materi Algoritma Pengurutan Data (Sorting) untuk siswa SMA Kelas 10 Fase E Berpikir Komputasional.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

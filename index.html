@@ -1,0 +1,1923 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media Pembelajaran Algoritma Sorting</title>
+    <meta name="description" content="Web pembelajaran interaktif materi Algoritma Pengurutan Data (Sorting) untuk siswa SMA Kelas 10 Fase E Berpikir Komputasional." />
+    <meta property="og:title" content="Media Pembelajaran Algoritma Sorting" />
+    <meta property="og:description" content="Web pembelajaran interaktif materi Algoritma Pengurutan Data (Sorting) untuk siswa SMA Kelas 10 Fase E Berpikir Komputasional." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <style>
+      :root {
+        --primary: #4338ca;
+        --primary-light: #6366f1;
+        --primary-bg: #e0e7ff;
+        --accent-compare: #f59e0b;
+        --accent-compare-bg: #fef3c7;
+        --accent-swap: #ef4444;
+        --accent-swap-bg: #fee2e2;
+        --accent-sorted: #10b981;
+        --accent-sorted-bg: #d1fae5;
+        --slate-900: #0f172a;
+        --slate-800: #1e293b;
+        --slate-700: #334155;
+        --slate-600: #475569;
+        --slate-500: #64748b;
+        --slate-300: #cbd5e1;
+        --slate-200: #e2e8f0;
+        --slate-100: #f1f5f9;
+        --slate-50: #f8fafc;
+        --white: #ffffff;
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        --radius-lg: 16px;
+        --radius-md: 10px;
+        --radius-sm: 6px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-color: var(--slate-50);
+        color: var(--slate-800);
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        background: linear-gradient(135deg, #312e81 0%, #4338ca 60%, #4f46e5 100%);
+        color: var(--white);
+        padding: 28px 20px 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .header-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .badge-fase {
+        align-self: flex-start;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        color: #ffffff;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        padding: 4px 12px;
+        border-radius: 999px;
+        backdrop-filter: blur(4px);
+      }
+
+      .header-title {
+        font-size: 1.85rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        line-height: 1.25;
+      }
+
+      .header-subtitle {
+        color: #c7d2fe;
+        font-size: 1rem;
+        max-width: 750px;
+      }
+
+      /* Navigation Tabs */
+      .nav-tabs-wrapper {
+        background: var(--white);
+        border-bottom: 1px solid var(--slate-200);
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .nav-tabs {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        padding: 0 16px;
+        gap: 8px;
+        overflow-x: auto;
+      }
+
+      .tab-btn {
+        appearance: none;
+        border: none;
+        background: none;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--slate-600);
+        padding: 14px 18px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 3px solid transparent;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+      }
+
+      .tab-btn:hover {
+        color: var(--primary);
+        background-color: var(--slate-50);
+      }
+
+      .tab-btn.active {
+        color: var(--primary);
+        border-bottom-color: var(--primary);
+        background-color: #faf5ff;
+      }
+
+      .tab-badge {
+        background: var(--slate-200);
+        color: var(--slate-700);
+        font-size: 0.75rem;
+        padding: 2px 7px;
+        border-radius: 999px;
+        font-weight: 700;
+      }
+
+      .tab-btn.active .tab-badge {
+        background: var(--primary-bg);
+        color: var(--primary);
+      }
+
+      /* Main Content Layout */
+      main {
+        flex: 1;
+        max-width: 1100px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+      }
+
+      .tab-panel {
+        display: none;
+      }
+
+      .tab-panel.active {
+        display: block;
+        animation: fadeIn 0.25s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Cards & Containers */
+      .card {
+        background: var(--white);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--slate-200);
+        box-shadow: var(--shadow-sm);
+        padding: 24px;
+        margin-bottom: 20px;
+      }
+
+      .card-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--slate-900);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .icon-circle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--primary-bg);
+        color: var(--primary);
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+
+      p {
+        margin-bottom: 12px;
+        color: var(--slate-700);
+      }
+
+      /* Grid 2 Columns */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 18px;
+        margin: 16px 0;
+      }
+
+      .concept-box {
+        border-radius: var(--radius-md);
+        padding: 18px;
+        border: 1px solid var(--slate-200);
+        background: var(--slate-50);
+      }
+
+      .concept-box.ascending {
+        border-left: 5px solid #3b82f6;
+        background: #f0f7ff;
+      }
+
+      .concept-box.descending {
+        border-left: 5px solid #f97316;
+        background: #fff8f1;
+      }
+
+      .concept-box h4 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .tag-pill {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .tag-blue { background: #dbeafe; color: #1e40af; }
+      .tag-orange { background: #ffedd5; color: #9a3412; }
+
+      /* Contextual Case Study: Kebakaran Hutan */
+      .case-study-box {
+        background: linear-gradient(to right, #fff7ed, #fef2f2);
+        border: 1px solid #fed7aa;
+        border-radius: var(--radius-md);
+        padding: 20px;
+        margin-top: 16px;
+      }
+
+      .case-study-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        color: #9a3412;
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+        margin-top: 12px;
+      }
+
+      table.priority-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        background: var(--white);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+
+      table.priority-table th, table.priority-table td {
+        padding: 10px 14px;
+        text-align: left;
+        border-bottom: 1px solid var(--slate-200);
+      }
+
+      table.priority-table th {
+        background: #ea580c;
+        color: var(--white);
+        font-weight: 600;
+      }
+
+      table.priority-table tr:hover {
+        background: #fff7ed;
+      }
+
+      .badge-danger {
+        background: #fee2e2;
+        color: #b91c1c;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+      }
+
+      .badge-warning {
+        background: #fef3c7;
+        color: #b45309;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+      }
+
+      .badge-normal {
+        background: #d1fae5;
+        color: #047857;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+      }
+
+      /* Quiz Section in Tab 1 */
+      .quiz-item {
+        background: var(--slate-50);
+        border: 1px solid var(--slate-200);
+        border-radius: var(--radius-md);
+        padding: 16px;
+        margin-bottom: 14px;
+      }
+
+      .quiz-question {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--slate-900);
+      }
+
+      .quiz-options {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .quiz-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        background: var(--white);
+        border: 1px solid var(--slate-300);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+
+      .quiz-option:hover {
+        background: #f8fafc;
+        border-color: var(--primary);
+      }
+
+      .quiz-option input[type="radio"] {
+        accent-color: var(--primary);
+      }
+
+      .quiz-feedback {
+        margin-top: 10px;
+        padding: 10px 14px;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        display: none;
+      }
+
+      .quiz-feedback.show {
+        display: block;
+      }
+
+      .quiz-feedback.correct {
+        background: #d1fae5;
+        border: 1px solid #a7f3d0;
+        color: #065f46;
+      }
+
+      .quiz-feedback.wrong {
+        background: #fee2e2;
+        border: 1px solid #fecaca;
+        color: #991b1b;
+      }
+
+      /* Video Tab */
+      .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: var(--radius-md);
+        background: #000;
+        box-shadow: var(--shadow-md);
+      }
+
+      .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .video-tips-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .tip-card {
+        background: #f8fafc;
+        border-left: 4px solid var(--primary);
+        padding: 14px;
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      }
+
+      .tip-card h4 {
+        font-size: 0.95rem;
+        color: var(--slate-900);
+        margin-bottom: 4px;
+      }
+
+      .tip-card p {
+        font-size: 0.85rem;
+        color: var(--slate-600);
+        margin-bottom: 0;
+      }
+
+      /* Tab 3: Interactive Simulation */
+      .sim-controls-panel {
+        background: #ffffff;
+        border: 1px solid var(--slate-200);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        margin-bottom: 18px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .controls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+        align-items: end;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .form-label {
+        font-size: 0.82rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--slate-600);
+        letter-spacing: 0.5px;
+      }
+
+      .select-input, .text-input {
+        padding: 9px 12px;
+        border: 1px solid var(--slate-300);
+        border-radius: var(--radius-sm);
+        font-size: 0.92rem;
+        background: var(--white);
+        color: var(--slate-800);
+        outline: none;
+        transition: border 0.15s ease;
+      }
+
+      .select-input:focus, .text-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+      }
+
+      .btn-group-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid var(--slate-200);
+      }
+
+      .btn {
+        appearance: none;
+        border: none;
+        border-radius: var(--radius-sm);
+        padding: 10px 18px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: all 0.15s ease;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: var(--white);
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background: #3730a3;
+      }
+
+      .btn-secondary {
+        background: var(--slate-100);
+        color: var(--slate-700);
+        border: 1px solid var(--slate-300);
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: var(--slate-200);
+        color: var(--slate-900);
+      }
+
+      .btn-accent {
+        background: #059669;
+        color: var(--white);
+      }
+
+      .btn-accent:hover:not(:disabled) {
+        background: #047857;
+      }
+
+      /* Visualizer Stage */
+      .visualizer-stage {
+        background: var(--white);
+        border: 1px solid var(--slate-200);
+        border-radius: var(--radius-lg);
+        padding: 24px 16px;
+        margin-bottom: 18px;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .legend-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        padding: 8px 14px;
+        background: var(--slate-50);
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--slate-200);
+        margin-bottom: 24px;
+        font-size: 0.82rem;
+      }
+
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        color: var(--slate-700);
+      }
+
+      .legend-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+      }
+
+      .bars-container {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 12px;
+        min-height: 270px;
+        padding-bottom: 12px;
+        border-bottom: 2px dashed var(--slate-200);
+      }
+
+      .bar-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 58px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .bar-box {
+        width: 100%;
+        border-radius: 8px 8px 4px 4px;
+        background: #6366f1;
+        color: var(--white);
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: 10px;
+        font-weight: 800;
+        font-size: 1.05rem;
+        transition: height 0.3s ease, background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .bar-label {
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: var(--slate-500);
+        margin-top: 8px;
+        text-align: center;
+      }
+
+      .bar-zone {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #d97706;
+        background: #fef3c7;
+        padding: 1px 4px;
+        border-radius: 4px;
+        margin-top: 2px;
+      }
+
+      /* Highlight states for bars */
+      .bar-column.comparing .bar-box {
+        background: var(--accent-compare) !important;
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.4);
+      }
+
+      .bar-column.swapping .bar-box {
+        background: var(--accent-swap) !important;
+        transform: scale(1.1);
+        box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.45);
+      }
+
+      .bar-column.sorted .bar-box {
+        background: var(--accent-sorted) !important;
+      }
+
+      /* Step Narration Box */
+      .narration-box {
+        background: #faf5ff;
+        border: 1px solid #e9d5ff;
+        border-radius: var(--radius-md);
+        padding: 16px 20px;
+        margin-top: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .narration-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #7e22ce;
+      }
+
+      .narration-text {
+        font-size: 0.98rem;
+        color: #3b0764;
+        line-height: 1.5;
+        margin-bottom: 0;
+      }
+
+      /* Metrics Bar */
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .metric-card {
+        background: var(--slate-50);
+        border: 1px solid var(--slate-200);
+        border-radius: var(--radius-sm);
+        padding: 10px 14px;
+        text-align: center;
+      }
+
+      .metric-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--slate-500);
+        text-transform: uppercase;
+      }
+
+      .metric-val {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--slate-900);
+      }
+
+      /* Completion Banner */
+      .completion-banner {
+        display: none;
+        background: #ecfdf5;
+        border: 2px solid #a7f3d0;
+        border-radius: var(--radius-md);
+        padding: 16px 20px;
+        margin-top: 16px;
+        color: #065f46;
+        align-items: center;
+        gap: 14px;
+        animation: popIn 0.3s ease;
+      }
+
+      .completion-banner.show {
+        display: flex;
+      }
+
+      @keyframes popIn {
+        from { transform: scale(0.95); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+
+      /* Footer */
+      footer {
+        background: var(--white);
+        border-top: 1px solid var(--slate-200);
+        padding: 24px 16px;
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--slate-500);
+        margin-top: auto;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 640px) {
+        .header-title {
+          font-size: 1.4rem;
+        }
+        .bars-container {
+          gap: 6px;
+          min-height: 220px;
+        }
+        .bar-column {
+          width: 40px;
+        }
+        .bar-box {
+          font-size: 0.85rem;
+          padding-top: 6px;
+        }
+        .btn {
+          padding: 8px 14px;
+          font-size: 0.85rem;
+          width: 100%;
+        }
+        .btn-group-row {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Aplikasi Pembelajaran -->
+    <header>
+      <div class="header-container">
+        <span class="badge-fase" id="badge-kurikulum">
+          🎯 Informatika SMA Kelas 10 • Fase E — Berpikir Komputasional
+        </span>
+        <h1 class="header-title" id="main-title">Media Pembelajaran: Algoritma Sorting (Pengurutan Data)</h1>
+        <p class="header-subtitle" id="main-desc">
+          Pelajari bagaimana komputer mengorganisir data secara terstruktur, memahami arah Ascending vs Descending, melihat simulasi penukaran langkah-demi-langkah, hingga aplikasi nyata penentuan prioritas bencana.
+        </p>
+      </div>
+    </header>
+
+    <!-- Navigasi Berbasis Tab / Modul -->
+    <div class="nav-tabs-wrapper">
+      <nav class="nav-tabs" role="tablist" aria-label="Modul Pembelajaran">
+        <button class="tab-btn active" id="tab-btn-1" role="tab" aria-selected="true" aria-controls="panel-materi" onclick="switchTab(1)">
+          <span>📖 Materi & Konsep Dasar</span>
+          <span class="tab-badge">Modul 1</span>
+        </button>
+        <button class="tab-btn" id="tab-btn-2" role="tab" aria-selected="false" aria-controls="panel-video" onclick="switchTab(2)">
+          <span>🎥 Video Penjelasan</span>
+          <span class="tab-badge">Modul 2</span>
+        </button>
+        <button class="tab-btn" id="tab-btn-3" role="tab" aria-selected="false" aria-controls="panel-simulasi" onclick="switchTab(3)">
+          <span>⚡ Simulasi Interaktif Sorting</span>
+          <span class="tab-badge">Praktikum</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Main Container -->
+    <main>
+      <!-- TAB 1: MATERI & KONSEP SORTING -->
+      <section id="panel-materi" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-1">
+        <!-- Pengantar -->
+        <article class="card" id="card-pengantar">
+          <h2 class="card-title">
+            <span class="icon-circle">💡</span>
+            1. Apa Itu Algoritma Sorting?
+          </h2>
+          <p>
+            Dalam kehidupan sehari-hari, kita sering melakukan pengurutan: merapikan kartu nama dari A sampai Z, menyusun buku di rak perpustakaan berdasarkan nomor katalog, atau mengantre di kasir berdasarkan waktu kedatangan.
+          </p>
+          <p>
+            <strong>Algoritma Sorting (Pengurutan Data)</strong> adalah serangkaian instruksi logis dan sistematis untuk menyusun kembali elemen-elemen sekumpulan data ke dalam suatu urutan tertentu berdasarkan nilai kuncinya.
+          </p>
+          <div style="background: #eef2ff; border-left: 4px solid var(--primary); padding: 12px 16px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin-top: 10px;">
+            <strong>Mengapa komputer perlu melakukan sorting?</strong>
+            <p style="margin-bottom: 0; font-size: 0.92rem; color: var(--slate-700);">
+              Data yang terurut akan jauh lebih cepat dicari (misalnya dengan <em>Binary Search</em>), lebih mudah dianalisis polanya, dan sangat mempermudah pengambilan keputusan secara cepat.
+            </p>
+          </div>
+        </article>
+
+        <!-- Arah Pengurutan: Ascending vs Descending -->
+        <article class="card" id="card-arah-sorting">
+          <h2 class="card-title">
+            <span class="icon-circle">🔄</span>
+            2. Perbedaan Arah Pengurutan: Ascending vs Descending
+          </h2>
+          <p>
+            Berdasarkan arah urutannya, sorting dibagi menjadi dua kelompok utama:
+          </p>
+
+          <div class="grid-2">
+            <!-- Ascending -->
+            <div class="concept-box ascending">
+              <h4>
+                <span class="tag-pill tag-blue">Menaik</span>
+                Ascending (Kecil ➔ Besar)
+              </h4>
+              <p style="font-size: 0.92rem;">
+                Menyusun data dari nilai yang paling <strong>kecil</strong> menuju nilai yang paling <strong>besar</strong>.
+              </p>
+              <ul style="padding-left: 20px; font-size: 0.9rem; color: var(--slate-700); line-height: 1.6;">
+                <li><strong>Angka:</strong> 12, 24, 56, 78, 90</li>
+                <li><strong>Abjad:</strong> A, B, C, D ... Z</li>
+                <li><strong>Contoh Nyata:</strong> Pengurutan nomor absen siswa, harga termurah di toko online, antrean baris-berbaris dari tinggi badan terpendek ke tertinggi.</li>
+              </ul>
+            </div>
+
+            <!-- Descending -->
+            <div class="concept-box descending">
+              <h4>
+                <span class="tag-pill tag-orange">Menurun</span>
+                Descending (Besar ➔ Kecil)
+              </h4>
+              <p style="font-size: 0.92rem;">
+                Menyusun data dari nilai yang paling <strong>besar</strong> menuju nilai yang paling <strong>kecil</strong>.
+              </p>
+              <ul style="padding-left: 20px; font-size: 0.9rem; color: var(--slate-700); line-height: 1.6;">
+                <li><strong>Angka:</strong> 99, 85, 67, 43, 10</li>
+                <li><strong>Abjad:</strong> Z, Y, X, W ... A</li>
+                <li><strong>Contoh Nyata:</strong> Peringkat nilai ujian tertinggi, perolehan medali Olimpiade, klasemen liga olahraga, skor tertinggi dalam game (high score).</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Konsep Kontekstual: Prioritas Risiko Kebakaran Hutan -->
+        <article class="card" id="card-studi-kasus">
+          <h2 class="card-title">
+            <span class="icon-circle">🚒</span>
+            3. Studi Kasus Berpikir Komputasional: Penentuan Prioritas Tanggap Darurat
+          </h2>
+          <p>
+            Salah satu penerapan penting sorting dalam kehidupan nyata adalah <strong>penentuan prioritas alokasi sumber daya terbatas</strong> saat terjadi bencana.
+          </p>
+
+          <div class="case-study-box">
+            <div class="case-study-header">
+              <span style="font-size: 1.5rem;">🔥</span>
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin: 0;">Kasus: Pemantauan Indeks Risiko Kebakaran Hutan (BPBD)</h3>
+            </div>
+            <p style="font-size: 0.92rem; color: #7c2d12;">
+              Badan Penanggulangan Bencana Daerah (BPBD) memantau 6 zona hutan di suatu provinsi dengan data sensor <em>Indeks Risiko Kebakaran</em> (skala 0 - 100). Armada mobil pemadam dan helikopter pemadam (water bombing) jumlahnya terbatas, sehingga <strong>zona dengan risiko tertinggi harus ditangani terlebih dahulu!</strong>
+            </p>
+
+            <div class="table-responsive">
+              <table class="priority-table" id="table-kebakaran">
+                <thead>
+                  <tr>
+                    <th>Nama Wilayah</th>
+                    <th>Indeks Risiko (0-100)</th>
+                    <th>Status Awal</th>
+                    <th>Hasil Sorting (Descending)</th>
+                    <th>Tindakan Prioritas</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Zona A (Bukit Pinus)</strong></td>
+                    <td>85</td>
+                    <td><span class="badge-danger">Kritis</span></td>
+                    <td><strong>Prioritas 2</strong> (85)</td>
+                    <td>Kirimkan 2 Mobil Damkar</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Zona B (Lembah Hijau)</strong></td>
+                    <td>42</td>
+                    <td><span class="badge-warning">Waspada</span></td>
+                    <td><strong>Prioritas 5</strong> (42)</td>
+                    <td>Patroli Regu Darat</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Zona C (Gambut Raya)</strong></td>
+                    <td>96</td>
+                    <td><span class="badge-danger">Sangat Kritis</span></td>
+                    <td><strong>Prioritas 1</strong> (96)</td>
+                    <td>Kirim Helikopter Water Bombing Segera!</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Zona D (Kaki Gunung)</strong></td>
+                    <td>18</td>
+                    <td><span class="badge-normal">Aman</span></td>
+                    <td><strong>Prioritas 6</strong> (18)</td>
+                    <td>Pemantauan Sensor Berkala</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Zona E (Rawa Selatan)</strong></td>
+                    <td>73</td>
+                    <td><span class="badge-danger">Tinggi</span></td>
+                    <td><strong>Prioritas 3</strong> (73)</td>
+                    <td>Kirimkan 1 Mobil Damkar</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Zona F (Hutan Lindung)</strong></td>
+                    <td>60</td>
+                    <td><span class="badge-warning">Sedang</span></td>
+                    <td><strong>Prioritas 4</strong> (60)</td>
+                    <td>Kesiapsiagaan Posko Terdekat</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size: 0.88rem; margin-top: 12px; color: #9a3412; font-style: italic;">
+              💡 <em>Kesimpulan Berpikir Komputasional:</em> Dengan mengurutkan data secara <strong>Descending (96 ➔ 85 ➔ 73 ➔ 60 ➔ 42 ➔ 18)</strong>, algoritma membantu petugas langsung mengambil keputusan kritis penyelamatan tanpa ragu!
+            </p>
+          </div>
+        </article>
+
+        <!-- Mengenal 3 Algoritma Dasar -->
+        <article class="card" id="card-tiga-algoritma">
+          <h2 class="card-title">
+            <span class="icon-circle">🧩</span>
+            4. Tiga Algoritma Sorting Dasar yang Sering Dipelajari
+          </h2>
+          <div class="grid-2">
+            <div class="concept-box" style="border-left: 4px solid var(--primary);">
+              <h4 style="color: var(--primary);">1. Bubble Sort (Pengurutan Gelembung)</h4>
+              <p style="font-size: 0.9rem;">
+                Membandingkan <strong>dua elemen yang saling bersebelahan</strong> satu demi satu. Jika urutannya salah, kedua elemen <strong>ditukar (swap)</strong>. Proses diulang terus hingga nilai terbesar/terkecil "mengapung" ke posisinya seperti gelembung udara.
+              </p>
+            </div>
+            <div class="concept-box" style="border-left: 4px solid #10b981;">
+              <h4 style="color: #047857;">2. Selection Sort (Pengurutan Seleksi)</h4>
+              <p style="font-size: 0.9rem;">
+                Mencari elemen dengan nilai <strong>paling minimum (atau maksimum)</strong> di seluruh deretan data yang belum terurut, lalu menukarnya langsung dengan elemen pada posisi paling depan yang belum terurut.
+              </p>
+            </div>
+            <div class="concept-box" style="border-left: 4px solid #8b5cf6;">
+              <h4 style="color: #6d28d9;">3. Insertion Sort (Pengurutan Sisip)</h4>
+              <p style="font-size: 0.9rem;">
+                Bekerja persis seperti saat kita <strong>merapikan kartu remi di tangan</strong>: mengambil satu per satu kartu baru, lalu menyisipkannya ke posisi yang tepat di antara kartu-kartu yang sudah tersusun rapi sebelumnya.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Kuis Cek Pemahaman Kilat -->
+        <article class="card" id="card-kuis">
+          <h2 class="card-title">
+            <span class="icon-circle">✏️</span>
+            5. Cek Pemahaman Kilat (Kuis Interaktif)
+          </h2>
+          <p style="font-size: 0.92rem; color: var(--slate-600);">
+            Uji pemahamanmu sebelum mencoba modul simulasi interaktif di tab selanjutnya!
+          </p>
+
+          <!-- Soal 1 -->
+          <div class="quiz-item" id="quiz-1">
+            <div class="quiz-question">1. Jika kita mengurutkan daftar ranking nilai ujian dari yang mendapat nilai 100 sampai nilai terendah, arah pengurutan apa yang digunakan?</div>
+            <div class="quiz-options">
+              <label class="quiz-option">
+                <input type="radio" name="q1" value="asc"> Ascending (Menaik)
+              </label>
+              <label class="quiz-option">
+                <input type="radio" name="q1" value="desc"> Descending (Menurun)
+              </label>
+              <label class="quiz-option">
+                <input type="radio" name="q1" value="random"> Acak (Random)
+              </label>
+            </div>
+            <div class="quiz-feedback" id="feedback-q1"></div>
+          </div>
+
+          <!-- Soal 2 -->
+          <div class="quiz-item" id="quiz-2">
+            <div class="quiz-question">2. Pada kasus penanggulangan kebakaran hutan, mengapa BPBD membutuhkan sorting secara Descending?</div>
+            <div class="quiz-options">
+              <label class="quiz-option">
+                <input type="radio" name="q2" value="a"> Agar wilayah dengan indeks kebakaran tertinggi segera mendapatkan bantuan pertama kali (prioritas darurat)
+              </label>
+              <label class="quiz-option">
+                <input type="radio" name="q2" value="b"> Agar wilayah aman mendapat kunjungan patroli terlebih dahulu
+              </label>
+              <label class="quiz-option">
+                <input type="radio" name="q2" value="c"> Supaya data terlihat rapi saja tanpa tujuan operasional
+              </label>
+            </div>
+            <div class="quiz-feedback" id="feedback-q2"></div>
+          </div>
+
+          <!-- Soal 3 -->
+          <div class="quiz-item" id="quiz-3">
+            <div class="quiz-question">3. Algoritma sorting yang secara konsisten membandingkan dua elemen yang bersebelahan dan menukarnya jika posisinya salah disebut...?</div>
+            <div class="quiz-options">
+              <label class="quiz-option">
+                <input type="radio" name="q3" value="bubble"> Bubble Sort
+              </label>
+              <label class="quiz-option">
+                <input type="radio" name="q3" value="selection"> Selection Sort
+              </label>
+              <label class="quiz-option">
+                <input type="radio" name="q3" value="binary"> Binary Search
+              </label>
+            </div>
+            <div class="quiz-feedback" id="feedback-q3"></div>
+          </div>
+
+          <div style="margin-top: 14px; display: flex; gap: 10px;">
+            <button class="btn btn-primary" onclick="checkQuiz()">Periksa Jawaban Kuis</button>
+            <button class="btn btn-secondary" onclick="resetQuiz()">Ulangi Kuis</button>
+          </div>
+        </article>
+      </section>
+
+      <!-- TAB 2: VIDEO PENJELASAN -->
+      <section id="panel-video" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-2">
+        <article class="card" id="card-video-container">
+          <h2 class="card-title">
+            <span class="icon-circle">🎬</span>
+            Video Penjelasan: Algoritma Sorting
+          </h2>
+          <p>
+            Simak video penjelasan edukatif berikut untuk memahami konsep visual dan logika berpikir di balik algoritma pengurutan data.
+          </p>
+
+          <!-- Responsive YouTube Embed -->
+          <div class="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/Mj-1TbJ6ino" 
+              title="Video Pembelajaran Algoritma Sorting" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <div style="margin-top: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <span style="font-size: 0.85rem; color: var(--slate-500);">
+              📺 Sumber: Video Pembelajaran Informatika (YouTube)
+            </span>
+            <a href="https://youtu.be/Mj-1TbJ6ino?si=jgXenw3mZvrbjT6s" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.85rem; padding: 6px 12px; text-decoration: none;">
+              ↗ Buka Video di Tab Baru YouTube
+            </a>
+          </div>
+
+          <!-- Guiding Points -->
+          <div class="video-tips-grid">
+            <div class="tip-card">
+              <h4>🎯 Fokus Pengamatan 1</h4>
+              <p>Amati bagaimana komputer hanya bisa membandingkan <strong>dua elemen sekaligus</strong> dalam satu waktu.</p>
+            </div>
+            <div class="tip-card">
+              <h4>🔄 Fokus Pengamatan 2</h4>
+              <p>Perhatikan syarat kapan dua elemen harus <strong>ditukar (swap)</strong> dan kapan posisinya dibiarkan tetap.</p>
+            </div>
+            <div class="tip-card">
+              <h4>🏁 Fokus Pengamatan 3</h4>
+              <p>Lihat bagaimana algoritma mengenali bahwa seluruh barisan data sudah <strong>terurut sempurna</strong>.</p>
+            </div>
+          </div>
+
+          <!-- Action prompt -->
+          <div style="margin-top: 24px; text-align: center; padding: 18px; background: #eef2ff; border-radius: var(--radius-md);">
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 6px;">Sudah memahami videonya?</h3>
+            <p style="font-size: 0.9rem; color: var(--slate-600); margin-bottom: 12px;">Mari kita buktikan pemahamanmu dengan mencoba langsung penukaran batang kartu angka di simulator!</p>
+            <button class="btn btn-primary" onclick="switchTab(3)">
+              ⚡ Coba Simulasi Interaktif Sorting Sekarang →
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- TAB 3: SIMULASI INTERAKTIF SORTING -->
+      <section id="panel-simulasi" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-3">
+        <!-- Panel Pengaturan Simulasi -->
+        <div class="sim-controls-panel" id="panel-kontrol">
+          <div class="controls-grid">
+            <!-- Pilihan Data Preset -->
+            <div class="form-group">
+              <label class="form-label" for="preset-select">Pilih Studi Kasus / Data:</label>
+              <select id="preset-select" class="select-input" onchange="onPresetChange()">
+                <option value="fire">🚒 Studi Kasus: Indeks Risiko Kebakaran</option>
+                <option value="random">🎲 Angka Acak (Random)</option>
+                <option value="reverse">🔄 Data Terbalik (Worst Case)</option>
+                <option value="custom">✏️ Data Kustom (Masukkan Sendiri)</option>
+              </select>
+            </div>
+
+            <!-- Algoritma -->
+            <div class="form-group">
+              <label class="form-label" for="algo-select">Pilih Algoritma:</label>
+              <select id="algo-select" class="select-input" onchange="resetSimulation()">
+                <option value="bubble">Bubble Sort (Perbandingan Bersebelahan)</option>
+                <option value="selection">Selection Sort (Pencarian Nilai Ekstrem)</option>
+                <option value="insertion">Insertion Sort (Penyisipan Kartu)</option>
+              </select>
+            </div>
+
+            <!-- Arah Sorting -->
+            <div class="form-group">
+              <label class="form-label" for="order-select">Arah Pengurutan:</label>
+              <select id="order-select" class="select-input" onchange="resetSimulation()">
+                <option value="asc">⬆️ Ascending (Kecil ke Besar)</option>
+                <option value="desc">⬇️ Descending (Besar ke Kecil)</option>
+              </select>
+            </div>
+
+            <!-- Kecepatan -->
+            <div class="form-group">
+              <label class="form-label" for="speed-select">Kecepatan Otomatis:</label>
+              <select id="speed-select" class="select-input">
+                <option value="1200">🐢 Lambat (1.2 detik / langkah)</option>
+                <option value="700" selected>🚶 Sedang (0.7 detik / langkah)</option>
+                <option value="300">⚡ Cepat (0.3 detik / langkah)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Input Kustom (Tersembunyi jika bukan mode custom) -->
+          <div id="custom-input-container" class="form-group" style="display: none; margin-top: 12px;">
+            <label class="form-label" for="custom-numbers">Masukkan 4 - 9 angka (pisahkan dengan koma, nilai 5 - 100):</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="custom-numbers" class="text-input" placeholder="contoh: 45, 12, 89, 34, 67" style="flex: 1;">
+              <button class="btn btn-secondary" onclick="applyCustomData()">Terapkan Data</button>
+            </div>
+          </div>
+
+          <!-- Tombol Kontrol Interaktif -->
+          <div class="btn-group-row">
+            <button id="btn-next" class="btn btn-primary" onclick="stepForward()">
+              ▶ Langkah Berikutnya (Step)
+            </button>
+            <button id="btn-play" class="btn btn-accent" onclick="toggleAutoPlay()">
+              ⏩ Mulai Otomatis
+            </button>
+            <button id="btn-prev" class="btn btn-secondary" onclick="stepBackward()" disabled>
+              ◀ Langkah Sebelumnya
+            </button>
+            <button id="btn-reset" class="btn btn-secondary" onclick="resetSimulation()">
+              🔄 Reset Posisi
+            </button>
+            <button id="btn-shuffle" class="btn btn-secondary" onclick="shuffleNewData()">
+              🎲 Acak Data Baru
+            </button>
+          </div>
+        </div>
+
+        <!-- Stage Visualisasi Batang Kartu Angka -->
+        <div class="visualizer-stage" id="stage-visualizer">
+          <!-- Legenda Visual -->
+          <div class="legend-bar">
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #6366f1;"></span>
+              <span>Data Netral</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: var(--accent-compare);"></span>
+              <span>Sedang Dibandingkan</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: var(--accent-swap);"></span>
+              <span>Sedang Ditukar (Swap)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: var(--accent-sorted);"></span>
+              <span>Posisi Selesai / Terurut</span>
+            </div>
+          </div>
+
+          <!-- Kontainer Batang Kartu -->
+          <div class="bars-container" id="bars-container">
+            <!-- Diisi secara dinamis oleh JavaScript -->
+          </div>
+
+          <!-- Kotak Narasi Langkah Edukatif -->
+          <div class="narration-box" id="narration-box">
+            <div class="narration-header">
+              <span id="step-indicator">Langkah 0 dari 0</span>
+              <span id="status-badge" style="background: #e9d5ff; color: #6b21a8; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem;">Siap Memulai</span>
+            </div>
+            <p class="narration-text" id="narration-text">
+              Tekan tombol <strong>"Langkah Berikutnya (Step)"</strong> untuk mengamati perbandingan elemen demi elemen secara perlahan, atau klik <strong>"Mulai Otomatis"</strong>.
+            </p>
+          </div>
+
+          <!-- Banner Notifikasi Selesai -->
+          <div class="completion-banner" id="completion-banner">
+            <span style="font-size: 1.8rem;">🎉</span>
+            <div>
+              <h4 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 2px;">Data Berhasil Terurut Sempurna!</h4>
+              <p style="font-size: 0.88rem; margin: 0;" id="completion-message">
+                Seluruh elemen kini telah berada pada posisi yang tepat sesuai aturan pengurutan.
+              </p>
+            </div>
+          </div>
+
+          <!-- Metrik Penghitung (Comparisons & Swaps) -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-label">Langkah Berjalan</div>
+              <div class="metric-val" id="metric-step">0</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Jumlah Perbandingan</div>
+              <div class="metric-val" id="metric-comps">0</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Jumlah Penukaran (Swap)</div>
+              <div class="metric-val" id="metric-swaps">0</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-label">Persentase Selesai</div>
+              <div class="metric-val" id="metric-progress">0%</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Edukatif -->
+    <footer>
+      <p style="margin-bottom: 4px; font-weight: 600; color: var(--slate-700);">
+        Media Pembelajaran Digital Informatika SMA Kelas 10 • Fase E (Berpikir Komputasional)
+      </p>
+      <p style="font-size: 0.8rem; margin-bottom: 0;">
+        Dibuat untuk mempermudah siswa memahami algoritma sorting dengan pendekatan visual dan kontekstual.
+      </p>
+    </footer>
+
+    <!-- Logic Script Pure Vanilla JS -->
+    <script>
+      // ==========================================
+      // 1. MANAJEMEN TAB / MODUL
+      // ==========================================
+      function switchTab(tabIndex) {
+        // Hentikan autoplay jika berpindah tab
+        stopAutoPlay();
+
+        // Update tombol tab
+        for (let i = 1; i <= 3; i++) {
+          const btn = document.getElementById(`tab-btn-${i}`);
+          if (btn) {
+            if (i === tabIndex) {
+              btn.classList.add('active');
+              btn.setAttribute('aria-selected', 'true');
+            } else {
+              btn.classList.remove('active');
+              btn.setAttribute('aria-selected', 'false');
+            }
+          }
+        }
+
+        // Update panel tab
+        const panels = [
+          document.getElementById('panel-materi'),
+          document.getElementById('panel-video'),
+          document.getElementById('panel-simulasi')
+        ];
+
+        panels.forEach((panel, idx) => {
+          if (panel) {
+            if (idx + 1 === tabIndex) {
+              panel.classList.add('active');
+            } else {
+              panel.classList.remove('active');
+            }
+          }
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // ==========================================
+      // 2. KUIS PEMAHAMAN KILAT (TAB 1)
+      // ==========================================
+      function checkQuiz() {
+        // Soal 1
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        const f1 = document.getElementById('feedback-q1');
+        if (!q1) {
+          f1.className = 'quiz-feedback show wrong';
+          f1.textContent = 'Pilih salah satu jawaban terlebih dahulu.';
+        } else if (q1.value === 'desc') {
+          f1.className = 'quiz-feedback show correct';
+          f1.textContent = '✅ Benar! Dari nilai 100 ke nilai terendah adalah Descending (Besar ke Kecil).';
+        } else {
+          f1.className = 'quiz-feedback show wrong';
+          f1.textContent = '❌ Kurang tepat. Urutan dari nilai terbesar (100) ke nilai terkecil disebut Descending (Menurun).';
+        }
+
+        // Soal 2
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        const f2 = document.getElementById('feedback-q2');
+        if (!q2) {
+          f2.className = 'quiz-feedback show wrong';
+          f2.textContent = 'Pilih salah satu jawaban terlebih dahulu.';
+        } else if (q2.value === 'a') {
+          f2.className = 'quiz-feedback show correct';
+          f2.textContent = '✅ Benar! Nilai risiko tertinggi harus segera ditangani paling awal untuk mencegah kebakaran meluas.';
+        } else {
+          f2.className = 'quiz-feedback show wrong';
+          f2.textContent = '❌ Kurang tepat. Penanganan bencana selalu memprioritaskan titik paling berisiko / darurat.';
+        }
+
+        // Soal 3
+        const q3 = document.querySelector('input[name="q3"]:checked');
+        const f3 = document.getElementById('feedback-q3');
+        if (!q3) {
+          f3.className = 'quiz-feedback show wrong';
+          f3.textContent = 'Pilih salah satu jawaban terlebih dahulu.';
+        } else if (q3.value === 'bubble') {
+          f3.className = 'quiz-feedback show correct';
+          f3.textContent = '✅ Benar! Bubble Sort secara khas membandingkan pasangan elemen bersebelahan (tetangga).';
+        } else {
+          f3.className = 'quiz-feedback show wrong';
+          f3.textContent = '❌ Kurang tepat. Algoritma yang membandingkan dua elemen bersebelahan berulang kali adalah Bubble Sort.';
+        }
+      }
+
+      function resetQuiz() {
+        ['q1', 'q2', 'q3'].forEach(name => {
+          const checked = document.querySelector(`input[name="${name}"]:checked`);
+          if (checked) checked.checked = false;
+        });
+        ['feedback-q1', 'feedback-q2', 'feedback-q3'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.className = 'quiz-feedback';
+            el.textContent = '';
+          }
+        });
+      }
+
+      // ==========================================
+      // 3. ENGINE SIMULASI SORTING (TAB 3)
+      // ==========================================
+      const PRESET_FIRE = [
+        { value: 85, zone: 'Zona A' },
+        { value: 42, zone: 'Zona B' },
+        { value: 96, zone: 'Zona C' },
+        { value: 18, zone: 'Zona D' },
+        { value: 73, zone: 'Zona E' },
+        { value: 60, zone: 'Zona F' }
+      ];
+
+      let currentData = [];
+      let stepsHistory = [];
+      let currentStepIndex = 0;
+      let isPlaying = false;
+      let playTimer = null;
+
+      // Inisialisasi awal saat halaman dibuka
+      function initApp() {
+        loadPresetData('fire');
+      }
+
+      function onPresetChange() {
+        const select = document.getElementById('preset-select');
+        const customContainer = document.getElementById('custom-input-container');
+        if (select.value === 'custom') {
+          customContainer.style.display = 'block';
+        } else {
+          customContainer.style.display = 'none';
+          loadPresetData(select.value);
+        }
+      }
+
+      function loadPresetData(type) {
+        stopAutoPlay();
+        if (type === 'fire') {
+          // Salin data studi kasus kebakaran
+          currentData = PRESET_FIRE.map(item => ({ ...item }));
+        } else if (type === 'reverse') {
+          currentData = [
+            { value: 90, zone: '#1' },
+            { value: 75, zone: '#2' },
+            { value: 60, zone: '#3' },
+            { value: 45, zone: '#4' },
+            { value: 30, zone: '#5' },
+            { value: 15, zone: '#6' }
+          ];
+        } else {
+          // Random
+          const count = 6;
+          currentData = [];
+          for (let i = 0; i < count; i++) {
+            currentData.push({
+              value: Math.floor(Math.random() * 85) + 15,
+              zone: `#${i + 1}`
+            });
+          }
+        }
+        buildStepsAndRender();
+      }
+
+      function shuffleNewData() {
+        stopAutoPlay();
+        const select = document.getElementById('preset-select');
+        if (select.value === 'fire') {
+          // Acak urutan zona kebakaran
+          currentData = [...PRESET_FIRE].sort(() => Math.random() - 0.5);
+        } else {
+          const count = 6;
+          currentData = [];
+          for (let i = 0; i < count; i++) {
+            currentData.push({
+              value: Math.floor(Math.random() * 85) + 15,
+              zone: `#${i + 1}`
+            });
+          }
+        }
+        buildStepsAndRender();
+      }
+
+      function applyCustomData() {
+        const raw = document.getElementById('custom-numbers').value.trim();
+        if (!raw) {
+          alert('Silakan masukkan angka terlebih dahulu.');
+          return;
+        }
+        const parts = raw.split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n));
+        if (parts.length < 3) {
+          alert('Mohon masukkan minimal 3 angka.');
+          return;
+        }
+        if (parts.length > 9) {
+          alert('Maksimal 9 angka agar tampilan batang tetap proporsional dan jelas.');
+          return;
+        }
+
+        currentData = parts.map((num, idx) => ({
+          value: Math.max(5, Math.min(100, num)),
+          zone: `Data ${idx + 1}`
+        }));
+
+        buildStepsAndRender();
+      }
+
+      // ==========================================
+      // GENERATOR STEP-BY-STEP ALGORITMA
+      // ==========================================
+      function buildStepsAndRender() {
+        stopAutoPlay();
+        const algo = document.getElementById('algo-select').value;
+        const order = document.getElementById('order-select').value; // 'asc' | 'desc'
+        const isAsc = order === 'asc';
+
+        // Rekam state awal
+        stepsHistory = [];
+        let arr = currentData.map(d => ({ ...d }));
+
+        // Langkah awal (Initial State)
+        stepsHistory.push({
+          array: arr.map(d => ({ ...d })),
+          comparing: [],
+          swapping: false,
+          sorted: [],
+          message: `Kondisi Awal: Terdapat ${arr.length} data yang belum terurut. Algoritma: ${getAlgoName(algo)} (${isAsc ? 'Ascending: Kecil ➔ Besar' : 'Descending: Besar ➔ Kecil'}). Tekan "Langkah Berikutnya" untuk memulai.`,
+          comps: 0,
+          swaps: 0
+        });
+
+        let totalComps = 0;
+        let totalSwaps = 0;
+
+        if (algo === 'bubble') {
+          // BUBBLE SORT
+          const n = arr.length;
+          const sortedIndices = [];
+
+          for (let i = 0; i < n - 1; i++) {
+            let swappedInPass = false;
+            for (let j = 0; j < n - i - 1; j++) {
+              totalComps++;
+              const valA = arr[j].value;
+              const valB = arr[j + 1].value;
+              const needSwap = isAsc ? (valA > valB) : (valA < valB);
+
+              // Langkah pembandingan
+              stepsHistory.push({
+                array: arr.map(d => ({ ...d })),
+                comparing: [j, j + 1],
+                swapping: false,
+                sorted: [...sortedIndices],
+                message: `Membandingkan Posisi [${j + 1}] (${arr[j].zone}: ${valA}) dengan Posisi [${j + 2}] (${arr[j + 1].zone}: ${valB}). ` +
+                  (needSwap 
+                    ? `Karena ${valA} ${isAsc ? '>' : '<'} ${valB} pada mode ${isAsc ? 'Ascending' : 'Descending'}, posisi kedua kartu ini HARUS DITUKAR (SWAP)!`
+                    : `Karena urutan sudah sesuai (${valA} ${isAsc ? '≤' : '≥'} ${valB}), posisi TIDAK PERLU DITUKAR.`),
+                comps: totalComps,
+                swaps: totalSwaps
+              });
+
+              if (needSwap) {
+                totalSwaps++;
+                swappedInPass = true;
+                // Swap
+                const temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+
+                // Langkah penukaran
+                stepsHistory.push({
+                  array: arr.map(d => ({ ...d })),
+                  comparing: [j, j + 1],
+                  swapping: true,
+                  sorted: [...sortedIndices],
+                  message: `Menukar posisi: Nilai ${arr[j].value} berpindah ke kiri dan nilai ${arr[j + 1].value} berpindah ke kanan.`,
+                  comps: totalComps,
+                  swaps: totalSwaps
+                });
+              }
+            }
+
+            // Elemen di ujung pass ini sudah final terurut
+            const finalIdx = n - 1 - i;
+            sortedIndices.push(finalIdx);
+
+            stepsHistory.push({
+              array: arr.map(d => ({ ...d })),
+              comparing: [],
+              swapping: false,
+              sorted: [...sortedIndices],
+              message: `Putaran (Pass) ke-${i + 1} selesai. Kartu pada posisi [${finalIdx + 1}] (Nilai: ${arr[finalIdx].value}) sekarang sudah berada di posisi final yang benar!`,
+              comps: totalComps,
+              swaps: totalSwaps
+            });
+
+            if (!swappedInPass) {
+              // Jika tidak ada penukaran sama sekali, berarti sudah rapi lebih awal
+              break;
+            }
+          }
+
+          // Tambahkan sisa indeks yang terurut
+          for (let k = 0; k < n; k++) {
+            if (!sortedIndices.includes(k)) sortedIndices.push(k);
+          }
+
+        } else if (algo === 'selection') {
+          // SELECTION SORT
+          const n = arr.length;
+          const sortedIndices = [];
+
+          for (let i = 0; i < n - 1; i++) {
+            let targetIdx = i;
+
+            stepsHistory.push({
+              array: arr.map(d => ({ ...d })),
+              comparing: [i],
+              swapping: false,
+              sorted: [...sortedIndices],
+              message: `Mencari nilai ${isAsc ? 'terkecil' : 'terbesar'} untuk ditempatkan pada posisi [${i + 1}]. Nilai sementara adalah ${arr[i].value}.`,
+              comps: totalComps,
+              swaps: totalSwaps
+            });
+
+            for (let j = i + 1; j < n; j++) {
+              totalComps++;
+              const isCandidate = isAsc ? (arr[j].value < arr[targetIdx].value) : (arr[j].value > arr[targetIdx].value);
+
+              stepsHistory.push({
+                array: arr.map(d => ({ ...d })),
+                comparing: [targetIdx, j],
+                swapping: false,
+                sorted: [...sortedIndices],
+                message: `Memeriksa Posisi [${j + 1}] (${arr[j].value}) dengan kandidat ${isAsc ? 'terkecil' : 'terbesar'} saat ini (${arr[targetIdx].value}). ` +
+                  (isCandidate ? `Ditemukan nilai baru yang lebih ${isAsc ? 'kecil' : 'besar'}!` : `Nilai belum melampaui kandidat.`),
+                comps: totalComps,
+                swaps: totalSwaps
+              });
+
+              if (isCandidate) {
+                targetIdx = j;
+              }
+            }
+
+            if (targetIdx !== i) {
+              totalSwaps++;
+              const temp = arr[i];
+              arr[i] = arr[targetIdx];
+              arr[targetIdx] = temp;
+
+              stepsHistory.push({
+                array: arr.map(d => ({ ...d })),
+                comparing: [i, targetIdx],
+                swapping: true,
+                sorted: [...sortedIndices],
+                message: `Menukar nilai ${arr[i].value} (dari posisi ${targetIdx + 1}) ke posisi target [${i + 1}].`,
+                comps: totalComps,
+                swaps: totalSwaps
+              });
+            }
+
+            sortedIndices.push(i);
+            stepsHistory.push({
+              array: arr.map(d => ({ ...d })),
+              comparing: [],
+              swapping: false,
+              sorted: [...sortedIndices],
+              message: `Posisi [${i + 1}] sekarang terkunci aman dengan nilai ${arr[i].value}.`,
+              comps: totalComps,
+              swaps: totalSwaps
+            });
+          }
+
+          for (let k = 0; k < n; k++) {
+            if (!sortedIndices.includes(k)) sortedIndices.push(k);
+          }
+
+        } else if (algo === 'insertion') {
+          // INSERTION SORT
+          const n = arr.length;
+          const sortedIndices = [0];
+
+          stepsHistory.push({
+            array: arr.map(d => ({ ...d })),
+            comparing: [0],
+            swapping: false,
+            sorted: [0],
+            message: `Elemen pertama (Posisi 1: ${arr[0].value}) dianggap sudah berada pada bagian terurut awal.`,
+            comps: totalComps,
+            swaps: totalSwaps
+          });
+
+          for (let i = 1; i < n; i++) {
+            let key = { ...arr[i] };
+            let j = i - 1;
+
+            stepsHistory.push({
+              array: arr.map(d => ({ ...d })),
+              comparing: [i],
+              swapping: false,
+              sorted: [...sortedIndices],
+              message: `Mengambil kartu baru: ${key.value} (dari posisi ${i + 1}) untuk disisipkan ke bagian kartu yang sudah rapi di sebelah kirinya.`,
+              comps: totalComps,
+              swaps: totalSwaps
+            });
+
+            while (j >= 0) {
+              totalComps++;
+              const shouldShift = isAsc ? (arr[j].value > key.value) : (arr[j].value < key.value);
+
+              stepsHistory.push({
+                array: arr.map(d => ({ ...d })),
+                comparing: [j, j + 1],
+                swapping: false,
+                sorted: [...sortedIndices],
+                message: `Membandingkan kartu sisipan (${key.value}) dengan kartu di posisi [${j + 1}] (${arr[j].value}). ` +
+                  (shouldShift ? `Karena ${arr[j].value} ${isAsc ? '>' : '<'} ${key.value}, geser ${arr[j].value} ke kanan.` : `Posisi sisip yang tepat ditemukan!`),
+                comps: totalComps,
+                swaps: totalSwaps
+              });
+
+              if (shouldShift) {
+                totalSwaps++;
+                arr[j + 1] = arr[j];
+                arr[j] = key; // visual swap representation
+                stepsHistory.push({
+                  array: arr.map(d => ({ ...d })),
+                  comparing: [j, j + 1],
+                  swapping: true,
+                  sorted: [...sortedIndices],
+                  message: `Menggeser kartu ${arr[j + 1].value} satu langkah ke kanan.`,
+                  comps: totalComps,
+                  swaps: totalSwaps
+                });
+                j--;
+              } else {
+                break;
+              }
+            }
+
+            sortedIndices.push(i);
+            stepsHistory.push({
+              array: arr.map(d => ({ ...d })),
+              comparing: [],
+              swapping: false,
+              sorted: [...sortedIndices],
+              message: `Kartu ${key.value} berhasil disisipkan rapi. Bagian terurut kini mencapai ${i + 1} kartu.`,
+              comps: totalComps,
+              swaps: totalSwaps
+            });
+          }
+        }
+
+        // Langkah Selesai Final
+        const allSorted = arr.map((_, idx) => idx);
+        stepsHistory.push({
+          array: arr.map(d => ({ ...d })),
+          comparing: [],
+          swapping: false,
+          sorted: allSorted,
+          message: `SELESAI! Seluruh data telah berhasil diurutkan secara ${isAsc ? 'Ascending (Kecil ke Besar)' : 'Descending (Besar ke Kecil)'} dengan total ${totalComps} perbandingan dan ${totalSwaps} penukaran.`,
+          comps: totalComps,
+          swaps: totalSwaps,
+          isCompleted: true
+        });
+
+        // Set pointer ke awal
+        currentStepIndex = 0;
+        renderCurrentStep();
+      }
+
+      function getAlgoName(code) {
+        if (code === 'bubble') return 'Bubble Sort';
+        if (code === 'selection') return 'Selection Sort';
+        if (code === 'insertion') return 'Insertion Sort';
+        return code;
+      }
+
+      // Render Step
+      function renderCurrentStep() {
+        if (stepsHistory.length === 0) return;
+        const step = stepsHistory[currentStepIndex];
+        const container = document.getElementById('bars-container');
+        container.innerHTML = '';
+
+        // Nilai tertinggi untuk penskalaan visual (min 40px, max 210px)
+        const maxValue = Math.max(...step.array.map(d => d.value), 100);
+
+        step.array.forEach((item, index) => {
+          const col = document.createElement('div');
+          col.className = 'bar-column';
+
+          // Kelas status highlight
+          if (step.swapping && step.comparing.includes(index)) {
+            col.classList.add('swapping');
+          } else if (step.comparing.includes(index)) {
+            col.classList.add('comparing');
+          } else if (step.sorted.includes(index)) {
+            col.classList.add('sorted');
+          }
+
+          // Tinggi batang proporsional
+          const heightPx = Math.max(42, Math.round((item.value / maxValue) * 200));
+
+          const box = document.createElement('div');
+          box.className = 'bar-box';
+          box.style.height = `${heightPx}px`;
+          box.textContent = item.value;
+
+          const label = document.createElement('div');
+          label.className = 'bar-label';
+          label.textContent = `[Pos ${index + 1}]`;
+
+          col.appendChild(box);
+          col.appendChild(label);
+
+          if (item.zone) {
+            const zone = document.createElement('div');
+            zone.className = 'bar-zone';
+            zone.textContent = item.zone;
+            col.appendChild(zone);
+          }
+
+          container.appendChild(col);
+        });
+
+        // Narasi & Metrik
+        const stepText = document.getElementById('step-indicator');
+        const statusBadge = document.getElementById('status-badge');
+        const narrationText = document.getElementById('narration-text');
+        const completionBanner = document.getElementById('completion-banner');
+        const completionMessage = document.getElementById('completion-message');
+
+        stepText.textContent = `Langkah ${currentStepIndex} dari ${stepsHistory.length - 1}`;
+        narrationText.innerHTML = step.message;
+
+        if (step.isCompleted) {
+          statusBadge.textContent = 'Selesai Terurut ✅';
+          statusBadge.style.background = '#d1fae5';
+          statusBadge.style.color = '#065f46';
+          completionBanner.classList.add('show');
+          completionMessage.textContent = `Hebat! Pengurutan selesai dalam ${step.comps} kali perbandingan dan ${step.swaps} kali penukaran posisi.`;
+        } else if (currentStepIndex === 0) {
+          statusBadge.textContent = 'Siap Memulai';
+          statusBadge.style.background = '#e9d5ff';
+          statusBadge.style.color = '#6b21a8';
+          completionBanner.classList.remove('show');
+        } else {
+          statusBadge.textContent = step.swapping ? 'Menukar Posisi 🔄' : (step.comparing.length > 0 ? 'Membandingkan 🔍' : 'Memproses ⚙️');
+          statusBadge.style.background = step.swapping ? '#fee2e2' : '#fef3c7';
+          statusBadge.style.color = step.swapping ? '#991b1b' : '#92400e';
+          completionBanner.classList.remove('show');
+        }
+
+        // Metrik angka
+        document.getElementById('metric-step').textContent = currentStepIndex;
+        document.getElementById('metric-comps').textContent = step.comps;
+        document.getElementById('metric-swaps').textContent = step.swaps;
+
+        const percent = Math.round((currentStepIndex / Math.max(1, stepsHistory.length - 1)) * 100);
+        document.getElementById('metric-progress').textContent = `${percent}%`;
+
+        // Update tombol keadaan
+        document.getElementById('btn-prev').disabled = (currentStepIndex === 0);
+        document.getElementById('btn-next').disabled = (currentStepIndex >= stepsHistory.length - 1);
+
+        if (currentStepIndex >= stepsHistory.length - 1) {
+          stopAutoPlay();
+        }
+      }
+
+      // Navigasi langkah
+      function stepForward() {
+        if (currentStepIndex < stepsHistory.length - 1) {
+          currentStepIndex++;
+          renderCurrentStep();
+        }
+      }
+
+      function stepBackward() {
+        if (currentStepIndex > 0) {
+          currentStepIndex--;
+          renderCurrentStep();
+        }
+      }
+
+      function resetSimulation() {
+        stopAutoPlay();
+        buildStepsAndRender();
+      }
+
+      // Autoplay
+      function toggleAutoPlay() {
+        if (isPlaying) {
+          stopAutoPlay();
+        } else {
+          startAutoPlay();
+        }
+      }
+
+      function startAutoPlay() {
+        if (currentStepIndex >= stepsHistory.length - 1) {
+          currentStepIndex = 0; // ulang dari awal jika sudah selesai
+        }
+        isPlaying = true;
+        const playBtn = document.getElementById('btn-play');
+        playBtn.textContent = '⏸ Jeda (Pause)';
+        playBtn.className = 'btn btn-secondary';
+
+        const speed = parseInt(document.getElementById('speed-select').value, 10) || 700;
+
+        playTimer = setInterval(() => {
+          if (currentStepIndex < stepsHistory.length - 1) {
+            currentStepIndex++;
+            renderCurrentStep();
+          } else {
+            stopAutoPlay();
+          }
+        }, speed);
+      }
+
+      function stopAutoPlay() {
+        isPlaying = false;
+        if (playTimer) {
+          clearInterval(playTimer);
+          playTimer = null;
+        }
+        const playBtn = document.getElementById('btn-play');
+        if (playBtn) {
+          playBtn.textContent = '⏩ Mulai Otomatis';
+          playBtn.className = 'btn btn-accent';
+        }
+      }
+
+      // Inisialisasi saat load
+      window.addEventListener('DOMContentLoaded', initApp);
+    </script>
+  </body>
+</html>
